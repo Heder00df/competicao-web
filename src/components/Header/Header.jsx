@@ -14,6 +14,8 @@ import HeaderLinks from "./HeaderLinks.jsx";
 import Button from "../../components/CustomButtons/Button.jsx";
 
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
+import connect from "react-redux/es/connect/connect";
+import autentcacarUsuario from "../../actions/auth/autenticacaoUsuario";
 
 function Header({ ...props }) {
   function makeBrand() {
@@ -61,4 +63,15 @@ Header.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
 };
 
-export default withStyles(headerStyle)(Header);
+const materialUIEnhanced = withStyles(headerStyle)(Header);
+
+export function mapStateToProps(state) {
+  return {
+    usuarioAutenticado: state.usuarioAutenticado
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { autentcacarUsuario }
+)(materialUIEnhanced);

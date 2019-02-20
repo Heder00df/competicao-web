@@ -1,12 +1,21 @@
-import {LOGIN_USUARIO} from "../../actions/types";
+import { LOGIN_USUARIO } from "../../actions/types";
 
-export default function  reducerAutenticacaoUsuario ( state = [], action) {
+export default function reducerAutenticacaoUsuario(state = [], action) {
   switch (action.type) {
     case LOGIN_USUARIO: {
-      return action.payload.data;
+      if (action.payload !== null && action.payload.headers !== undefined) {
+        const usuarioAutenticado = {
+          tokenJwt: action.payload.headers.authorization.substr(7),
+          username: '',
+          isUserAuthenticated: true
+        };
+        return usuarioAutenticado;
+      }
+
+      return null;
     }
 
-    default:{
+    default: {
       return state;
     }
   }
