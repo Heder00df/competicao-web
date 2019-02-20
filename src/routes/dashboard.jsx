@@ -18,7 +18,7 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Equipes from "../components/equipe/Equipes"
 import EquipeFormulario from "../components/equipe/EquipeFormulario";
-import Login from "../views/login"
+import Login from "../components/Auth/Login"
 
 
 const dashboardRoutes = [
@@ -65,6 +65,13 @@ const dashboardRoutes = [
     component: TableList
   },
   {
+    path: "/login",
+    sidebarName: "Acessar",
+    navbarName: "Acessar",
+    icon: Atletas,
+    component: Login
+  },
+  {
     path: "/typography",
     sidebarName: "Typography",
     navbarName: "Typography",
@@ -81,7 +88,7 @@ const dashboardRoutes = [
   {
     path: "/login",
     sidebarName: "Acessar",
-    navbarName: "Acessar",
+    navbarName: "",
     icon: LocationOn,
     component: Login
   },
