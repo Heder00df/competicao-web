@@ -8,9 +8,12 @@ import "./assets/css/material-dashboard-react.css?v=1.5.0";
 
 import indexRoutes from "./routes/index.jsx";
 import configureStore from "./store/configureStore";
+import jwtInterceptor from "./interceptors/authenticationJwtInterceptors";
 
 const hist = createBrowserHistory();
 const store = configureStore();
+
+jwtInterceptor(store);
 
 ReactDOM.render(
   <Provider store={store}>

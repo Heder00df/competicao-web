@@ -1,55 +1,74 @@
-import axios from 'axios'
-import decode from 'jwt-decode'
+import axios from "axios";
+import decode from "jwt-decode";
 
-import { saveSecurityToken, removeSecurityToken } from '../security/securityContext'
+import {
+  saveSecurityToken,
+  removeSecurityToken
+} from "../../security/securityContext";
 
-import { SLOW_REQUEST_CONFIG } from '../util/loadingUtil'
-import { USER_LOGOUT, AUTHENTICATION_FAILED, USER_AUTHENTICATED } from './types'
+import { SLOW_REQUEST_CONFIG } from "../../util/loadingUtil";
+import {
+  USER_LOGOUT,
+  AUTHENTICATION_FAILED,
+  USER_AUTHENTICATED
+} from "../types";
 
-export const axiosWrapper = axios
+export const axiosWrapper = axios;
 
-const authenticationUrl = '/api/auth'
+const authenticationUrl = "/login";
 
-export function validarToken (token) {
-  return decode(token).exp > new Date().getTime()
+export function validarToken(token) {
+  return decode(token).exp > new Date().getTime();
 }
 
-export function isUserAuthenticated (auth) {
-  return auth && auth.isUserAuthenticated && auth.tokenJwt && validarToken(auth.tokenJwt)
+export function isUserAuthenticated(auth) {
+  return (
+    auth &&
+    auth.isUserAuthenticated &&
+    auth.tokenJwt &&
+    validarToken(auth.tokenJwt)
+  );
 }
 
-export const authenticateUser = data => dispatch => axios.post(authenticationUrl, data, SLOW_REQUEST_CONFIG)
-  .then((response) => {
-    const usuarioAutenticado = response.data
+export const authenticateUser = data => dispatch =>
+  axios
+    .post(authenticationUrl, data, SLOW_REQUEST_CONFIG)
+    .then(response => {
+      const usuarioAutenticado = response.data;
 
-    const tokenDecodificado = decode(usuarioAutenticado.tokenServico.tokenJwt)
-    if (!validarToken(usuarioAutenticado.tokenServico.tokenJwt)) {
+      const tokenDecodificado = decode(
+        usuarioAutenticado.tokenServico.tokenJwt
+      );
+      if (!validarToken(usuarioAutenticado.tokenServico.tokenJwt)) {
+        dispatch({
+          type: AUTHENTICATION_FAILED,
+          payload: { erro: "Sessão Expirou" }
+        });
+      }
+
+      const authentication = {
+        tokenJwt: usuarioAutenticado.tokenServico.tokenJwt,
+        username: data.username,
+        nomeUsuario: tokenDecodificado.nus,
+        orgaos: usuarioAutenticado.orgaos,
+        isUserAuthenticated: true
+      };
+      saveSecurityToken(authentication);
+
+      return dispatch({
+        type: USER_AUTHENTICATED,
+        payload: authentication
+      });
+    })
+    .catch(err =>
       dispatch({
         type: AUTHENTICATION_FAILED,
-        payload: { erro: 'Sessão Expirou' }
+        payload: { err }
       })
-    }
-
-    const authentication = {
-      tokenJwt: usuarioAutenticado.tokenServico.tokenJwt,
-      username: data.username,
-      nomeUsuario: tokenDecodificado.nus,
-      orgaos: usuarioAutenticado.orgaos,
-      isUserAuthenticated: true
-    }
-    saveSecurityToken(authentication)
-
-    return dispatch({
-      type: USER_AUTHENTICATED,
-      payload: authentication
-    })
-  }).catch(err => dispatch({
-    type: AUTHENTICATION_FAILED,
-    payload: { err }
-  }))
+    );
 
 export const logoutUser = () => {
-  removeSecurityToken()
+  removeSecurityToken();
   return {
     type: USER_LOGOUT,
     payload: {
@@ -57,5 +76,5 @@ export const logoutUser = () => {
       isUserAuthenticated: false,
       username: null
     }
-  }
-}
+  };
+};

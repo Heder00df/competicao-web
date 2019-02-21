@@ -17,6 +17,7 @@
     "perfect-scrollbar": "1.4.0",
     "prop-types": "^15.6.2",
     "react": "16.5.2",
+    "jwt-decode": "^2.2.0",
     "react-chartist": "0.13.1",
     "react-dom": "16.5.2",
     "react-google-maps": "9.4.5",
@@ -58,7 +59,7 @@
     "eslint-plugin-react": "7.11.1",
     "prettier": "1.14.3"
   },
-  "proxy": "http://localhost:8082/",
+  "proxy": "http://localhost:8080/",
   "devDependencies": {
     "babel-cli": "6.26.0",
     "babel-plugin-module-resolver": "3.1.1",
