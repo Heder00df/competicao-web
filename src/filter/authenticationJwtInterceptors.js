@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isUserAuthenticated } from "../actions/auth/authenticationJwtActions";
+import { isUserAuthenticated } from "../actions/authenticationJwtActions";
 import { getAuthentication } from "../security/securityContext";
 import { AUTHENTICATION_FAILED } from "../actions/types";
 
@@ -12,7 +12,10 @@ export default function jwtInterceptor(store) {
   }
   const temToken = () => getAuthentication() && getAuthentication().tokenJwt;
 
-  const ehAuth = config => config.url && config.url === "/login";
+  // eslint-disable-next-line no-console
+  console.log(temToken);
+
+  const ehAuth = config => config.url && config.url === "/api/auth";
 
   const ehPublico = config =>
     config.url && config.url.indexOf("/api/rest/publico") !== -1;

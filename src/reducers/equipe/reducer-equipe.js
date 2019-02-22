@@ -1,5 +1,4 @@
 import {
-  BUSCAR_EQUIPES,
   SELECIONAR_EQUIPE,
   SALVAR_EQUIPE,
   EXCLUIR_EQUIPE, LIMPAR_EQUIPE
@@ -7,9 +6,6 @@ import {
 
 export default function  reducerEquipe ( state = [], action) {
   switch (action.type) {
-    case BUSCAR_EQUIPES: {
-      return action.payload.data;
-    }
     case SELECIONAR_EQUIPE:{
       return action.payload;
     }
