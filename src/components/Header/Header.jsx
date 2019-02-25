@@ -73,5 +73,5 @@ export function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { autentcacarUsuario }
+  { autenticarUsuario: autentcacarUsuario }
 )(materialUIEnhanced);

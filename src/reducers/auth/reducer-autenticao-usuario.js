@@ -6,7 +6,7 @@ export default function reducerAutenticacaoUsuario(state = [], action) {
       if (action.payload !== null && action.payload.headers !== undefined) {
         const usuarioAutenticado = {
           tokenJwt: action.payload.headers.authorization.substr(7),
-          username: '',
+          username: "",
           isUserAuthenticated: true
         };
         return usuarioAutenticado;

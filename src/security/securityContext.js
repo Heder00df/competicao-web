@@ -1,3 +1,5 @@
+import decode from "jwt-decode";
+
 const authTokenKey = "authTokenKey";
 
 export const saveSecurityToken = authentication => {
@@ -29,3 +31,19 @@ export const getAuthentication = () => {
     throw err;
   }
 };
+
+export const getRolesUsuario = () => {
+  const { tokenJwt } = getAuthentication();
+
+  return tokenJwt ? decode(tokenJwt).roles : [];
+};
+
+export const getPerfisUsuario = () =>
+  getRolesUsuario().filter(role => role.startsWith("P285S"));
+
+export const hasPerfil = perfil => getPerfisUsuario().includes(perfil);
+
+export const hasFuncaoComputacional = sigla =>
+  getRolesUsuario().includes(sigla);
+
+export const perfilOrgao = (perfil, codigoOrgao) => `${perfil}E${codigoOrgao}`;

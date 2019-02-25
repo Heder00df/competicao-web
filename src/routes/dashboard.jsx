@@ -25,6 +25,7 @@ const dashboardRoutes = [
     path: "/dashboard",
     sidebarName: "Dashboard",
     navbarName: "Material Dashboard",
+    isAutenticate: false,
     icon: Dashboard,
     component: DashboardPage
   },
@@ -32,6 +33,7 @@ const dashboardRoutes = [
     path: "/equipe",
     sidebarName: "",
     navbarName: "",
+    isAutenticate: true,
     icon: Assignment,
     component: EquipeFormulario
   },
@@ -39,6 +41,7 @@ const dashboardRoutes = [
     path: "/equipes",
     sidebarName: "Equipes",
     navbarName: "Equipes",
+    isAutenticate: true,
     icon: Assignment,
     component: Equipes
   },
@@ -46,6 +49,7 @@ const dashboardRoutes = [
     path: "/user",
     sidebarName: "User Profile",
     navbarName: "Profile",
+    isAutenticate: true,
     icon: Person,
     component: UserProfile
   },
@@ -53,6 +57,7 @@ const dashboardRoutes = [
     path: "/table",
     sidebarName: "Table List",
     navbarName: "Table List",
+    isAutenticate: false,
     icon: "content_paste",
     component: TableList
   },
@@ -60,6 +65,7 @@ const dashboardRoutes = [
     path: "/table",
     sidebarName: "Atletas",
     navbarName: "Atletas",
+    isAutenticate: true,
     icon: Atletas,
     component: TableList
   },
@@ -67,6 +73,7 @@ const dashboardRoutes = [
     path: "/login",
     sidebarName: "Acessar",
     navbarName: "Acessar",
+    isAutenticate: false,
     icon: Atletas,
     component: Login
   },
@@ -74,6 +81,7 @@ const dashboardRoutes = [
     path: "/typography",
     sidebarName: "Typography",
     navbarName: "Typography",
+    isAutenticate: false,
     icon: LibraryBooks,
     component: Typography
   },
@@ -81,6 +89,7 @@ const dashboardRoutes = [
     path: "/icons",
     sidebarName: "Icons",
     navbarName: "Icons",
+    isAutenticate: false,
     icon: BubbleChart,
     component: Icons
   },
@@ -88,6 +97,7 @@ const dashboardRoutes = [
     path: "/login",
     sidebarName: "Acessar",
     navbarName: "",
+    isAutenticate: false,
     icon: LocationOn,
     component: Login
   },
