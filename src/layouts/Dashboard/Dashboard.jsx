@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -19,15 +19,18 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import connect from "react-redux/es/connect/connect";
-import buscarEquipes from "../../actions/equipe/buscarEquipes";
-import excluirEquipe from "../../actions/equipe/excluirEquipe";
-import selecionarEquipe from "../../actions/equipe/selecionarEquipe";
+import Equipes from "../../components/equipe/Equipes";
+import AuthenticatedRoute from "../../routes/AuthenticatedRoute";
 
 const switchRoutes = (
   <Switch>
     {dashboardRoutes.map((prop, key) => {
-      if (prop.redirect)
+      if (prop.redirect){
         return <Redirect from={prop.path} to={prop.to} key={key} />;
+      }
+      if (prop.isAutenticate){
+        return <AuthenticatedRoute path={prop.path} component={prop.component} key={key} />
+      }
       return <Route path={prop.path} component={prop.component} key={key} />;
     })}
   </Switch>

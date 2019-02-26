@@ -22,6 +22,6 @@ export class AuthenticatedRoute extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication: { isUserAuthenticated } }) => ({ isUserAuthenticated })
+const mapStateToProps = ({ usuarioAutenticado: { isUserAuthenticated } }) => ({ isUserAuthenticated })
 
 export default connect(mapStateToProps)(AuthenticatedRoute)

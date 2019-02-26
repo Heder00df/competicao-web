@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -10,7 +11,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import autentcacarUsuario from "../../actions/auth/autenticacaoUsuario";
+import autenticarUsuario from "../../actions/auth/autenticacaoUsuario";
 import { saveSecurityToken } from "../../security/securityContext";
 
 const styles = {
@@ -60,7 +61,7 @@ class Login extends React.Component {
       email: this.state.usuario,
       senha: this.state.senha
     };
-    this.props.autentcacarUsuario(dadosAutenticacao).then(resp => {
+    this.props.autenticarUsuario(dadosAutenticacao).then(resp => {
       if (resp != null && resp.payload.status === 200) {
         const authentication = {
           tokenJwt: resp.payload.headers.authorization.substr(7),
@@ -85,6 +86,12 @@ class Login extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { isUserAuthenticated } = this.props.usuarioAutenticado;
+
+    if (isUserAuthenticated) {
+      return <Redirect to={from} />;
+    }
     return (
       <div>
         <form onSubmit={this.salvarEquipe} className="text-justify">
@@ -154,5 +161,5 @@ export function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { autentcacarUsuario }
+  { autenticarUsuario }
 )(equipeFormularioStyle);

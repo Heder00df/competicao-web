@@ -22,10 +22,13 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Icon from "@material-ui/core/Icon";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { hasPerfil } from "../../security/securityContext";
 
 class Equipes extends React.Component {
   componentDidMount() {
     this.props.buscarEquipes();
+    const perfil = hasPerfil;
+    console.log(perfil);
   }
 
   exibirEquipes() {
