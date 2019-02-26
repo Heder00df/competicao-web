@@ -56,7 +56,9 @@ class EquipeFormulario extends React.Component {
     if (this.props.equipe !== null && this.props.equipe !== undefined) {
       this.setState({
         codigo: this.props.equipe.id,
-        descricao: this.props.equipe.descricao
+        descricao: this.props.equipe.descricao,
+        email: this.props.equipe.email,
+        idUsuario: this.props.equipe.idUsuario
       });
     }
   }
@@ -71,15 +73,14 @@ class EquipeFormulario extends React.Component {
 
   salvarEquipe(event) {
     event.preventDefault();
-    const token = this.getAuthentication();
     const equipe = {
       descricao: this.state.descricao,
       id: this.state.codigo,
-      email: this.state.email
+      email: this.state.email,
+      idUsuario: this.props.equipe.idUsuario
     };
-    console.log(equipe);
 
-    /* this.props.salvarEquipe(equipe).then(resp => {
+    this.props.salvarEquipe(equipe).then(resp => {
       if (resp != null && resp.payload.status === 200) {
         this.setState({
           mensagem: `Equipe ${this.state.descricao} salva com sucesso.`
@@ -90,7 +91,7 @@ class EquipeFormulario extends React.Component {
           mensagem: `Erro ao salvar equipe ${this.state.descricao}.`
         });
       }
-    }); */
+    });
   }
 
   exibirMensagem() {
