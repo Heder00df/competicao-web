@@ -27,8 +27,6 @@ import { hasPerfil } from "../../security/securityContext";
 class Equipes extends React.Component {
   componentDidMount() {
     this.props.buscarEquipes();
-    const perfil = hasPerfil;
-    console.log(perfil);
   }
 
   exibirEquipes() {
@@ -78,7 +76,7 @@ class Equipes extends React.Component {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color="success">
               <h4 className={classes.cardTitleWhite}>Equipes</h4>
               <p className={classes.cardCategoryWhite}>
                 Listagem de equipes cadastradas na liga.
@@ -164,5 +162,5 @@ export function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { buscarEquipes, excluirEquipe, selecionarEquipe }
+  { buscarEquipes, excluirEquipe, selecionarEquipe, hasPerfil }
 )(equipeWithStyle);

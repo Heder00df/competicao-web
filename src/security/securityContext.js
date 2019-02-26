@@ -35,11 +35,10 @@ export const getAuthentication = () => {
 export const getRolesUsuario = () => {
   const { tokenJwt } = getAuthentication();
 
-  return tokenJwt ? decode(tokenJwt).roles : [];
+  return tokenJwt ? decode(tokenJwt).perfis : [];
 };
 
-export const getPerfisUsuario = () =>
-  getRolesUsuario().filter(role => role.startsWith("P285S"));
+export const getPerfisUsuario = () => getRolesUsuario().filter(role => role);
 
 export const hasPerfil = perfil => getPerfisUsuario().includes(perfil);
 

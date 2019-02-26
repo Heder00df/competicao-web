@@ -77,7 +77,7 @@ class EquipeFormulario extends React.Component {
       descricao: this.state.descricao,
       id: this.state.codigo,
       email: this.state.email,
-      idUsuario: this.props.equipe.idUsuario
+      idUsuario: this.props.equipe ? this.props.equipe.idUsuario : null
     };
 
     this.props.salvarEquipe(equipe).then(resp => {
