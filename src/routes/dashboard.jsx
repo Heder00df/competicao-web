@@ -17,7 +17,8 @@ import Icons from "views/Icons/Icons.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Equipes from "../components/equipe/Equipes"
 import EquipeFormulario from "../components/equipe/EquipeFormulario";
-import Login from "../components/Auth/Login"
+import Login from "../components/Auth/Login";
+import CadastroAtleta from "../components/Atleta/CadastroDadosAtleta";
 
 
 const dashboardRoutes = [
@@ -62,12 +63,20 @@ const dashboardRoutes = [
     component: TableList
   },
   {
-    path: "/table",
+    path: "/atleta",
     sidebarName: "Atletas",
     navbarName: "Atletas",
-    isAutenticate: true,
+    isAutenticate: false,
     icon: Atletas,
-    component: TableList
+    component: CadastroAtleta
+  },
+  {
+    path: "/atleta",
+    sidebarName: "",
+    navbarName: "",
+    isAutenticate: false,
+    icon: Atletas,
+    component: CadastroAtleta
   },
   {
     path: "/login",
