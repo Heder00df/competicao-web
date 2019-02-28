@@ -29,7 +29,7 @@ export const minLength = min => value =>
 export const number = value =>
   value && isNaN(Number(value)) ? MUST_BE_A_NUMBER : undefined;
 
-export const minValue = min => value =>
+export const  minValue = min => value =>
   value && value < min ? `Deve ser maior ou igual a ${min}` : undefined;
 
 export const email = value =>
@@ -45,3 +45,7 @@ export const isCNPJ = value =>
 
 export const isCPF = value =>
   value && !cpf.isValid(value) ? INVALID_CPF : undefined;
+
+export const isExistCPF = value => {
+  return value && isCPF ? undefined : INVALID_CPF;
+};

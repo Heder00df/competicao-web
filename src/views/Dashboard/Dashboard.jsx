@@ -37,6 +37,7 @@ class Dashboard extends React.Component {
   };
 
   exibirCards() {
+    console.log(this.props.usuarioAutenticado.token)
     if (this.props.usuarioAutenticado.isUserAuthenticated) {
       const { classes } = this.props;
       return (

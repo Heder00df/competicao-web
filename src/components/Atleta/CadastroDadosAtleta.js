@@ -4,7 +4,11 @@ import CardContent from "@material-ui/core/CardContent";
 
 import { connect } from "react-redux";
 import Atleta from "./Atleta";
-import { cadastrar, consultar } from "../../actions/atleta/dadosAtletaAction";
+import {
+  cadastrar,
+  consultar,
+  pesquisarAtletaPorCpf
+} from "../../actions/atleta/dadosAtletaAction";
 
 class CadastroDadosAtleta extends Component {
   componentDidMount() {
@@ -17,11 +21,20 @@ class CadastroDadosAtleta extends Component {
     this.props.consultar();
   };
 
+  buscuarPorCpf = cpf => {
+    console.log(cpf.target.value);
+
+  }
+
   render() {
     return (
       <Card className="mb-4">
         <CardContent>
-          <Atleta onSubmit={this.onSubmit} dados={this.props.dados} />
+          <Atleta
+            onSubmit={this.onSubmit}
+            dados={this.props.dados}
+            buscarPorCpf={this.buscuarPorCpf}
+          />
         </CardContent>
       </Card>
     );
@@ -32,7 +45,7 @@ function mapStateToProps(state) {
   return { dados: state.dados };
 }
 
-const actions = { consultar, cadastrar };
+const actions = { consultar, cadastrar, pesquisarAtletaPorCpf };
 export default connect(
   mapStateToProps,
   actions

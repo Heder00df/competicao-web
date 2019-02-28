@@ -5,6 +5,7 @@ export const CONSULTAR_DADOS_EMPREGADOR = "CONSULTAR_DADOS_EMPREGADOR";
 export const ERRO_AO_CONSULTAR_DADOS = "ERRO_AO_CONSULTAR_DADOS";
 export const CADASTRAR_DADOS_EMPREGADOR = "CADASTRAR_DADOS_EMPREGADOR";
 export const ERRO_AO_CADASTRAR_DADOS = "ERRO_AO_CADASTRAR_DADOS";
+export const PESQUISAR_POR_CPF = "PESQUISAR_POR_CPF";
 
 export const consultar = () => dispatch => {
   axios
@@ -12,6 +13,22 @@ export const consultar = () => dispatch => {
     .then(response => {
       dispatch({
         type: CONSULTAR_DADOS_EMPREGADOR,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: ERRO_AO_CONSULTAR_DADOS,
+        payload: error
+      });
+    });
+};
+export const pesquisarAtletaPorCpf = cpf => dispatch => {
+  axios
+    .get(`/atleta/cpf/${cpf}`, SLOW_REQUEST_CONFIG)
+    .then(response => {
+      dispatch({
+        type: PESQUISAR_POR_CPF,
         payload: response.data
       });
     })

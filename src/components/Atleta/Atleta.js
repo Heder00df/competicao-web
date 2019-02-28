@@ -23,7 +23,9 @@ import {
   composeValidators,
   email,
   isCPF,
-  required
+  required,
+  isExistCPF,
+  minValue
 } from "../../util/fieldLevelValidations";
 
 const styles = theme => ({
@@ -138,10 +140,10 @@ class DadosAtletaForm extends Component {
   }
 
   renderSelect = ({
-                    input: { value, name, onChange, ...restInput },
-                    meta,
-                    ...rest
-                  }) => {
+    input: { value, name, onChange, ...restInput },
+    meta,
+    ...rest
+  }) => {
     const { classes } = this.props;
     return (
       <FormControl className={classes.formControl} fullWidth>
@@ -162,10 +164,10 @@ class DadosAtletaForm extends Component {
   };
 
   renderInput = ({
-                   input: { name, onChange, value, ...restInput },
-                   meta,
-                   ...rest
-                 }) => {
+    input: { name, onChange, value, ...restInput },
+    meta,
+    ...rest
+  }) => {
     const { classes } = this.props;
     return (
       <TextField
@@ -183,10 +185,10 @@ class DadosAtletaForm extends Component {
   };
 
   renderInputCPF = ({
-                      input: { name, onChange, value, ...restInput },
-                      meta,
-                      ...rest
-                    }) => {
+    input: { name, onChange, value, ...restInput },
+    meta,
+    ...rest
+  }) => {
     const { classes } = this.props;
     return (
       <TextField
@@ -198,6 +200,7 @@ class DadosAtletaForm extends Component {
         }}
         onChange={onChange}
         value={value}
+        onblur={this.props.buscarPorCpf(value)}
         className={classes.textField}
         margin="normal"
         fullWidth
@@ -206,10 +209,10 @@ class DadosAtletaForm extends Component {
   };
 
   renderInputFixo = ({
-                       input: { name, onChange, value, ...restInput },
-                       meta,
-                       ...rest
-                     }) => {
+    input: { name, onChange, value, ...restInput },
+    meta,
+    ...rest
+  }) => {
     const { classes } = this.props;
     return (
       <TextField
@@ -229,10 +232,10 @@ class DadosAtletaForm extends Component {
   };
 
   renderInputCelular = ({
-                          input: { name, onChange, value, ...restInput },
-                          meta,
-                          ...rest
-                        }) => {
+    input: { name, onChange, value, ...restInput },
+    meta,
+    ...rest
+  }) => {
     const { classes } = this.props;
     return (
       <TextField
@@ -252,10 +255,10 @@ class DadosAtletaForm extends Component {
   };
 
   renderDatePicker = ({
-                        input: { name, onChange, value, ...restInput },
-                        meta,
-                        ...rest
-                      }) => {
+    input: { name, onChange, value, ...restInput },
+    meta,
+    ...rest
+  }) => {
     const { classes } = this.props;
 
     return (
@@ -284,6 +287,11 @@ class DadosAtletaForm extends Component {
     });
     this.setState({ dados: copy });
   };
+
+  onBlurCpf = value => {
+    console.log(value);
+  }
+
 
   renderValidationDate = () => {
     if (this.state.isRetificacao) {
@@ -320,10 +328,21 @@ class DadosAtletaForm extends Component {
                 fullWidth
                 margin="normal"
               >
-                <FormLabel component="legend">Contato</FormLabel>
+                <FormLabel component="legend">Cadastro de atleta</FormLabel>
                 <FormGroup row>
                   <Grid container spacing={24}>
-                    <Grid item xs={8} sm={3}>
+                  <Grid item xs={12} sm={5}>
+                      <Field
+                        label="CPF"
+                        name="cpfContatoEmpregador"
+                        type="text"
+                        component={this.renderInputCPF}
+                        maxLength={11}
+                        placeholder="CPF"
+                        validate={this.setState()}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
                       <Field
                         name="nomeContatoEmpregador"
                         label="Nome"
@@ -331,10 +350,10 @@ class DadosAtletaForm extends Component {
                         component={this.renderInput}
                         maxLength={70}
                         placeholder="Nome"
-                        validate={required}
+                        validate={minValue}
                       />
                     </Grid>
-                    <Grid item xs={8} sm={3}>
+                    {/* <Grid item xs={8} sm={3}>
                       <Field
                         name="descrEmailContatoEmpregador"
                         label="E-mail"
@@ -344,18 +363,7 @@ class DadosAtletaForm extends Component {
                         placeholder="E-mail"
                         validate={email}
                       />
-                    </Grid>
-                    <Grid item xs={8} sm={3}>
-                      <Field
-                        label="CPF"
-                        name="cpfContatoEmpregador"
-                        type="text"
-                        component={this.renderInputCPF}
-                        maxLength={11}
-                        placeholder="CPF"
-                        validate={composeValidators(required, isCPF)}
-                      />
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </FormGroup>
 
