@@ -15,11 +15,10 @@ import TableList from "views/TableList/TableList.jsx";
 import Typography from "views/Typography/Typography.jsx";
 import Icons from "views/Icons/Icons.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
-import Equipes from "../components/equipe/Equipes"
+import Equipes from "../components/equipe/Equipes";
 import EquipeFormulario from "../components/equipe/EquipeFormulario";
 import Login from "../components/Auth/Login";
-import CadastroAtleta from "../components/Atleta/CadastroDadosAtleta";
-
+import Atleta from "../components/Atleta/Atleta";
 
 const dashboardRoutes = [
   {
@@ -68,7 +67,7 @@ const dashboardRoutes = [
     navbarName: "Atletas",
     isAutenticate: false,
     icon: Atletas,
-    component: CadastroAtleta
+    component: Atleta
   },
   {
     path: "/atleta",
@@ -76,7 +75,7 @@ const dashboardRoutes = [
     navbarName: "",
     isAutenticate: false,
     icon: Atletas,
-    component: CadastroAtleta
+    component: Atleta
   },
   {
     path: "/login",

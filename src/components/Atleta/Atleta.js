@@ -1,61 +1,47 @@
-import React, { Component } from "react";
-
-import Grid from "@material-ui/core/Grid";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
-import NumberFormat from "react-number-format";
+import FormGroup from "@material-ui/core/FormGroup";
+import Grid from "@material-ui/core/Grid";
+// @material-ui/core components
+import withStyles from "@material-ui/core/styles/withStyles";
+import TextField from "@material-ui/core/TextField";
+import Card from "components/Card/Card.jsx";
+import CardBody from "components/Card/CardBody.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import GridContainer from "components/Grid/GridContainer.jsx";
+// core components
+import GridItem from "components/Grid/GridItem.js";
 import PropTypes from "prop-types";
-
+import React from "react";
 import { Field, Form } from "react-final-form";
-
-import { withRouter } from "react-router-dom";
-import "react-datepicker/dist/react-datepicker.css";
-
-import { withStyles } from "@material-ui/core/styles/index";
-
+import NumberFormat from "react-number-format";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   composeValidators,
-  email,
   isCPF,
-  required,
-  isExistCPF,
-  minValue
+  required
 } from "../../util/fieldLevelValidations";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
+import pesquisarAtletaPorCpf from "../../actions/atleta/pesquisarPorCpf";
+
+const styles = {
+  cardCategoryWhite: {
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0"
   },
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120
-  },
-  selectField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2
-  },
-  formControlFieldset: {},
-  button: {
-    margin: theme.spacing.unit
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none"
   }
-});
+};
 
 function NumberFormatCustomCPF(props) {
   const { inputRef, onChange, ...other } = props;
@@ -129,40 +115,17 @@ NumberFormatCustomCelular.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-class DadosAtletaForm extends Component {
-  state = {
-    isRetificacao: null,
-    dados: []
-  };
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ dados: nextProps.dados });
+class Atleta extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      exibirOutrosCampos: false,
+      codigo: null,
+      dataInclusao: null,
+      email: "",
+      mensagem: null
+    };
   }
-
-  renderSelect = ({
-    input: { value, name, onChange, ...restInput },
-    meta,
-    ...rest
-  }) => {
-    const { classes } = this.props;
-    return (
-      <FormControl className={classes.formControl} fullWidth>
-        <InputLabel htmlFor={name}>{rest.label}</InputLabel>
-        <Select
-          {...rest}
-          name={name}
-          inputProps={restInput}
-          helperText={meta.touched ? meta.error : undefined}
-          onChange={onChange}
-          value={value}
-          className={classes.selectField}
-          margin="normal"
-          id={name}
-        />
-      </FormControl>
-    );
-  };
-
   renderInput = ({
     input: { name, onChange, value, ...restInput },
     meta,
@@ -200,7 +163,6 @@ class DadosAtletaForm extends Component {
         }}
         onChange={onChange}
         value={value}
-        onblur={this.props.buscarPorCpf(value)}
         className={classes.textField}
         margin="normal"
         fullWidth
@@ -276,149 +238,184 @@ class DadosAtletaForm extends Component {
     );
   };
 
-  onSelect = value => {
-    this.setState({ isRetificacao: value });
-  };
-
-  onChangeDate = date => {
-    const copy = Object.assign({}, this.state.dados, {
-      dataInicio: date,
-      retificar: true
-    });
-    this.setState({ dados: copy });
-  };
-
-  onBlurCpf = value => {
-    console.log(value);
-  }
-
-
-  renderValidationDate = () => {
-    if (this.state.isRetificacao) {
+  exibirOutrosCampos() {
+    if (this.state.exibirOutrosCampos) {
       return (
-        <Grid item xs={4} sm={2}>
-          <Field
-            id="dataInicio"
-            label="Início da Validade"
-            name="dataInicio"
-            type="date"
-            component={this.renderDatePicker}
-          />
-        </Grid>
+        <div>
+          <Grid item xs={8} sm={8}>
+            <Field
+              name="nome"
+              label="Nome"
+              type="text"
+              component={this.renderInput}
+              maxLength={120}
+              placeholder="Nome"
+              validate={required}
+            />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Field
+              id="dataNascimento"
+              label="Data de Nascimento"
+              name="dataInicio"
+              type="date"
+              component={this.renderDatePicker}
+            />
+          </Grid>
+          <Grid item xs={8} sm={8}>
+            <Field
+              label="Logradouro"
+              name="logradouro"
+              type="text"
+              component={this.renderInput}
+              maxLength={120}
+              placeholder="Logradouro"
+            />
+          </Grid>
+          <Grid item xs={8} sm={4}>
+            <Field
+              label="Complemento"
+              name="complemento"
+              type="text"
+              component={this.renderInput}
+              maxLength={120}
+              placeholder="Complemento"
+            />
+          </Grid>
+          <Grid item xs={8} sm={3}>
+            <Field
+              label="Numero"
+              name="numero"
+              type="text"
+              component={this.renderInput}
+              maxLength={10}
+              placeholder="Numero"
+            />
+          </Grid>
+          <FormGroup row>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={3}>
+                <Field
+                  label="Telefone"
+                  name="numFoneContatoEmpregador"
+                  type="text"
+                  component={this.renderInputFixo}
+                  maxLength={15}
+                  placeholder="Telefone"
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Field
+                  label="Celular"
+                  name="numCelularContatoEmpregador"
+                  type="text"
+                  component={this.renderInputCelular}
+                  maxLength={15}
+                  placeholder="Celular"
+                />
+              </Grid>
+            </Grid>
+          </FormGroup>
+        </div>
       );
     }
+    return "";
+  }
+
+  descricao() {
+    return this.state.exibirOutrosCampos ? "Salvar" : "Pesquisar";
+  }
+
+  onSubmit = async values => {
+    if (this.state.exibirOutrosCampos) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      this.props.consultar();
+    }
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.props.pesquisarAtletaPorCpf(values.cpf).then(resp => {
+      if (resp.payload.data.cpf === null) {
+        this.setState({ exibirOutrosCampos: true });
+      }
+    });
   };
 
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={24} justify="flex-start">
+      <div>
         <Form
-          onSubmit={this.props.onSubmit}
+          onSubmit={this.onSubmit}
           initialValues={this.state.dados}
-          render={({ handleSubmit, reset, submitting }) => (
+          render={({ handleSubmit }) => (
             <form
               className={classes.container}
               onSubmit={handleSubmit}
               noValidate
             >
-              <FormControl
-                component="fieldset"
-                className={classes.formControlFieldset}
-                fullWidth
-                margin="normal"
-              >
-                <FormLabel component="legend">Cadastro de atleta</FormLabel>
-                <FormGroup row>
-                  <Grid container spacing={24}>
-                  <Grid item xs={12} sm={5}>
-                      <Field
-                        label="CPF"
-                        name="cpfContatoEmpregador"
-                        type="text"
-                        component={this.renderInputCPF}
-                        maxLength={11}
-                        placeholder="CPF"
-                        validate={this.setState()}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                      <Field
-                        name="nomeContatoEmpregador"
-                        label="Nome"
-                        type="text"
-                        component={this.renderInput}
-                        maxLength={70}
-                        placeholder="Nome"
-                        validate={minValue}
-                      />
-                    </Grid>
-                    {/* <Grid item xs={8} sm={3}>
-                      <Field
-                        name="descrEmailContatoEmpregador"
-                        label="E-mail"
-                        type="text"
-                        component={this.renderInput}
-                        maxLength={60}
-                        placeholder="E-mail"
-                        validate={email}
-                      />
-                    </Grid> */}
-                  </Grid>
-                </FormGroup>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <Card>
+                    <CardHeader color="primary">
+                      <h4 className={classes.cardTitleWhite}>
+                        Cadastro de Equipes
+                      </h4>
+                      <p className={classes.cardCategoryWhite}>
+                        Informe o nome da equipe
+                      </p>
+                    </CardHeader>
+                    <CardBody>
+                      <Grid item xs={10} sm={3}>
+                        <Field
+                          label="CPF"
+                          name="cpf"
+                          type="text"
+                          component={this.renderInputCPF}
+                          maxLength={11}
+                          placeholder="CPF"
+                          validate={composeValidators(required, isCPF)}
+                        />
+                      </Grid>
+                      {this.exibirOutrosCampos()}
 
-                <FormGroup row>
-                  <Grid container spacing={24}>
-                    <Grid item xs={12} sm={3}>
-                      <Field
-                        label="Telefone"
-                        name="numFoneContatoEmpregador"
-                        type="text"
-                        component={this.renderInputFixo}
-                        maxLength={15}
-                        placeholder="Telefone"
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={3}>
-                      <Field
-                        label="Celular"
-                        name="numCelularContatoEmpregador"
-                        type="text"
-                        component={this.renderInputCelular}
-                        maxLength={15}
-                        placeholder="Celular"
-                      />
-                    </Grid>
-                  </Grid>
-                </FormGroup>
-              </FormControl>
-              <Button
-                color="primary"
-                type="submit"
-                variant="raised"
-                className={classes.button}
-                disabled={submitting}
-              >
-                Salvar
-              </Button>
-              <Button
-                color="default"
-                variant="outlined"
-                className={classes.button}
-                onClick={() => this.props.history.push("/")}
-              >
-                Cancelar
-              </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        type="submit"
+                      >
+                        {this.descricao()}
+                      </Button>
+                      <Link to={"/equipes"}>
+                        <Button
+                          variant="contained"
+                          className={classes.button}
+                          onClick={() => this.props.limparEquipeSelecionada()}
+                          style={{ marginLeft: "9px" }}
+                        >
+                          Voltar
+                        </Button>
+                      </Link>
+                    </CardBody>
+                  </Card>
+                </GridItem>
+              </GridContainer>
             </form>
           )}
         />
-      </Grid>
+      </div>
     );
   }
 }
 
-const materialUIEnhance = withStyles(styles)(DadosAtletaForm);
+const atletaFormularioStyle = withStyles(styles)(Atleta);
 
-const routerEnhance = withRouter(materialUIEnhance);
+export function mapStateToProps(state) {
+  return {
+    equipe: state.equipe
+  };
+}
 
-export default routerEnhance;
+export default connect(
+  mapStateToProps,
+  { pesquisarAtletaPorCpf }
+)(atletaFormularioStyle);

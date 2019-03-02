@@ -21,20 +21,11 @@ class CadastroDadosAtleta extends Component {
     this.props.consultar();
   };
 
-  buscuarPorCpf = cpf => {
-    console.log(cpf.target.value);
-
-  }
-
   render() {
     return (
       <Card className="mb-4">
         <CardContent>
-          <Atleta
-            onSubmit={this.onSubmit}
-            dados={this.props.dados}
-            buscarPorCpf={this.buscuarPorCpf}
-          />
+          <Atleta onSubmit={this.onSubmit} dados={this.props.dados} />
         </CardContent>
       </Card>
     );
@@ -45,7 +36,7 @@ function mapStateToProps(state) {
   return { dados: state.dados };
 }
 
-const actions = { consultar, cadastrar, pesquisarAtletaPorCpf };
+const actions = { consultar, cadastrar };
 export default connect(
   mapStateToProps,
   actions
