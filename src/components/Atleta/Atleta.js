@@ -23,6 +23,7 @@ import {
 } from "../../util/fieldLevelValidations";
 
 import pesquisarAtletaPorCpf from "../../actions/atleta/pesquisarPorCpf";
+import salvarAtleta from "../../actions/atleta/salvarAtleta";
 
 const styles = {
   cardCategoryWhite: {
@@ -87,6 +88,54 @@ function NumberFormatCustomFixo(props) {
 }
 
 NumberFormatCustomFixo.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
+};
+
+function DataNascimentoFormater(props) {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      ref={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value
+          }
+        });
+      }}
+      format="##/##/####"
+    />
+  );
+}
+
+DataNascimentoFormater.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
+};
+
+function NumeroFormater(props) {
+  const { inputRef, onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      ref={inputRef}
+      onValueChange={values => {
+        onChange({
+          target: {
+            value: values.value
+          }
+        });
+      }}
+      format="##########"
+    />
+  );
+}
+
+NumeroFormater.propTypes = {
   inputRef: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired
 };
@@ -226,13 +275,45 @@ class Atleta extends React.Component {
     return (
       <TextField
         {...rest}
+        name={name}
         helperText={meta.touched ? meta.error : undefined}
-        type="date"
+        InputProps={{
+          inputComponent: DataNascimentoFormater
+        }}
+        onChange={onChange}
         value={value}
         className={classes.textField}
         InputLabelProps={{
           shrink: true
         }}
+        margin="normal"
+        fullWidth
+      />
+    );
+  };
+
+  renderNumero = ({
+    input: { name, onChange, value, ...restInput },
+    meta,
+    ...rest
+  }) => {
+    const { classes } = this.props;
+
+    return (
+      <TextField
+        {...rest}
+        name={name}
+        helperText={meta.touched ? meta.error : undefined}
+        InputProps={{
+          inputComponent: NumeroFormater
+        }}
+        onChange={onChange}
+        value={value}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true
+        }}
+        margin="normal"
         fullWidth
       />
     );
@@ -253,15 +334,29 @@ class Atleta extends React.Component {
               validate={required}
             />
           </Grid>
-          <Grid item xs={4} sm={2}>
-            <Field
-              id="dataNascimento"
-              label="Data de Nascimento"
-              name="dataInicio"
-              type="date"
-              component={this.renderDatePicker}
-            />
-          </Grid>
+          <FormGroup row>
+            <Grid container spacing={24}>
+              <Grid item xs={4} sm={3}>
+                <Field
+                  id="dataNascimento"
+                  label="Data de Nascimento"
+                  name="dataNascimento"
+                  type="text"
+                  placeholder="dd/mm/yyyy"
+                  component={this.renderDatePicker}
+                />
+              </Grid>
+              <Grid item xs={4} sm={3}>
+                <Field
+                  label="Identidade"
+                  name="identidade"
+                  type="text"
+                  placeholder="Identidade"
+                  component={this.renderNumero}
+                />
+              </Grid>
+            </Grid>
+          </FormGroup>
           <Grid item xs={8} sm={8}>
             <Field
               label="Logradouro"
@@ -287,7 +382,7 @@ class Atleta extends React.Component {
               label="Numero"
               name="numero"
               type="text"
-              component={this.renderInput}
+              component={this.renderNumero}
               maxLength={10}
               placeholder="Numero"
             />
@@ -297,7 +392,7 @@ class Atleta extends React.Component {
               <Grid item xs={12} sm={3}>
                 <Field
                   label="Telefone"
-                  name="numFoneContatoEmpregador"
+                  name="numFixo"
                   type="text"
                   component={this.renderInputFixo}
                   maxLength={15}
@@ -307,7 +402,7 @@ class Atleta extends React.Component {
               <Grid item xs={12} sm={3}>
                 <Field
                   label="Celular"
-                  name="numCelularContatoEmpregador"
+                  name="numeroCelular"
                   type="text"
                   component={this.renderInputCelular}
                   maxLength={15}
@@ -329,7 +424,7 @@ class Atleta extends React.Component {
   onSubmit = async values => {
     if (this.state.exibirOutrosCampos) {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      this.props.consultar();
+      this.props.salvarAtleta(values);
     }
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.props.pesquisarAtletaPorCpf(values.cpf).then(resp => {
@@ -417,5 +512,8 @@ export function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { pesquisarAtletaPorCpf }
+  {
+    pesquisarAtletaPorCpf,
+    salvarAtleta
+  }
 )(atletaFormularioStyle);
