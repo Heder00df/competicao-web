@@ -3,7 +3,8 @@ import {
   SELECIONAR_ATLETA,
   SALVAR_ATLETA,
   EXCLUIR_ATLETA,
-  PESQUISAR_POR_CPF
+  PESQUISAR_POR_CPF,
+  LIMPAR_ATLETA
 } from "../../actions/types";
 
 export default function reducerAtleta(state = [], action) {
@@ -22,6 +23,9 @@ export default function reducerAtleta(state = [], action) {
     }
     case PESQUISAR_POR_CPF: {
       return action.payload.data;
+    }
+    case LIMPAR_ATLETA: {
+      return null;
     }
 
     default: {

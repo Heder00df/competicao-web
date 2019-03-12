@@ -10,6 +10,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 // core components
 import GridItem from "components/Grid/GridItem.js";
+import SnackbarContent from "components/Snackbar/SnackbarContent.jsx";
 import PropTypes from "prop-types";
 import React from "react";
 import { Field, Form } from "react-final-form";
@@ -24,6 +25,7 @@ import {
 
 import pesquisarAtletaPorCpf from "../../actions/atleta/pesquisarPorCpf";
 import salvarAtleta from "../../actions/atleta/salvarAtleta";
+import limparAtleta from "../../actions/atleta/limparAtleta";
 
 const styles = {
   cardCategoryWhite: {
@@ -175,6 +177,10 @@ class Atleta extends React.Component {
       mensagem: null
     };
   }
+  componentDidMount() {
+    this.props.limparAtleta();
+  }
+
   renderInput = ({
     input: { name, onChange, value, ...restInput },
     meta,
@@ -334,6 +340,16 @@ class Atleta extends React.Component {
               validate={required}
             />
           </Grid>
+          <Grid item xs={8} sm={4}>
+            <Field
+              name="posicao"
+              label="Posição"
+              type="text"
+              component={this.renderInput}
+              maxLength={120}
+              placeholder="Posição"
+            />
+          </Grid>
           <FormGroup row>
             <Grid container spacing={24}>
               <Grid item xs={4} sm={3}>
@@ -392,7 +408,7 @@ class Atleta extends React.Component {
               <Grid item xs={12} sm={3}>
                 <Field
                   label="Telefone"
-                  name="numFixo"
+                  name="telefoneFixo"
                   type="text"
                   component={this.renderInputFixo}
                   maxLength={15}
@@ -402,7 +418,7 @@ class Atleta extends React.Component {
               <Grid item xs={12} sm={3}>
                 <Field
                   label="Celular"
-                  name="numeroCelular"
+                  name="telefoneCelular"
                   type="text"
                   component={this.renderInputCelular}
                   maxLength={15}
@@ -411,6 +427,13 @@ class Atleta extends React.Component {
               </Grid>
             </Grid>
           </FormGroup>
+        </div>
+      );
+    }
+    if (this.state.mensagem !== null) {
+      return (
+        <div>
+          <SnackbarContent message={this.state.mensagem} color="success" />
         </div>
       );
     }
@@ -427,9 +450,12 @@ class Atleta extends React.Component {
       this.props.salvarAtleta(values);
     }
     await new Promise(resolve => setTimeout(resolve, 1000));
+    this.props.limparAtleta();
     this.props.pesquisarAtletaPorCpf(values.cpf).then(resp => {
       if (resp.payload.data.cpf === null) {
         this.setState({ exibirOutrosCampos: true });
+      } else {
+        this.setState({ mensagem: "Atleta já cadastrado" });
       }
     });
   };
@@ -467,6 +493,12 @@ class Atleta extends React.Component {
                           component={this.renderInputCPF}
                           maxLength={11}
                           placeholder="CPF"
+                          onChange={() =>
+                            this.setState({
+                              exibirOutrosCampos: false,
+                              mensagem: null
+                            })
+                          }
                           validate={composeValidators(required, isCPF)}
                         />
                       </Grid>
@@ -506,7 +538,7 @@ const atletaFormularioStyle = withStyles(styles)(Atleta);
 
 export function mapStateToProps(state) {
   return {
-    equipe: state.equipe
+    atleta: state.atleta
   };
 }
 
@@ -514,6 +546,7 @@ export default connect(
   mapStateToProps,
   {
     pesquisarAtletaPorCpf,
-    salvarAtleta
+    salvarAtleta,
+    limparAtleta
   }
 )(atletaFormularioStyle);
