@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c4d00b8-9496-401d-b162-db731b2a2c70" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Atleta/Atleta.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Atleta/Atleta.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Atleta/CadastroDadosAtleta.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Atleta/CadastroDadosAtleta.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/dashboard.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="8c4d00b8-9496-401d-b162-db731b2a2c70" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,11 +10,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Atleta/Atleta.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="340" column="10" selection-start-line="340" selection-start-column="10" selection-end-line="340" selection-end-column="10" />
+            <state relative-caret-position="2775">
+              <caret line="470" column="10" selection-start-line="470" selection-start-column="10" selection-end-line="470" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/competicao/Competicoes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1770">
+              <caret line="163" column="62" selection-start-line="163" selection-start-column="62" selection-end-line="163" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -51,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/actions/atleta/dadosAtletaAction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+            <state relative-caret-position="345">
+              <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -65,7 +68,11 @@
       <find>NumberFormatCustomCPF</find>
       <find>renderInput</find>
       <find>NumberFormatCustomFixo</find>
+      <find>equipes</find>
     </findStrings>
+    <replaceStrings>
+      <replace>Competicoes</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -79,6 +86,7 @@
         <option value="$PROJECT_DIR$/src/actions/atleta/dadosAtletaAction.js" />
         <option value="$PROJECT_DIR$/src/components/Atleta/CadastroDadosAtleta.js" />
         <option value="$PROJECT_DIR$/src/components/Atleta/Atleta.js" />
+        <option value="$PROJECT_DIR$/src/components/competicao/Competicoes.js" />
       </list>
     </option>
   </component>
@@ -108,6 +116,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,20 +140,12 @@
               <item name="competicao-web" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Atleta" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="competicao-web" type="b2602c69:ProjectViewProjectNode" />
-              <item name="competicao-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="equipe" type="462c0819:PsiDirectoryNode" />
+              <item name="competicao" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -192,8 +193,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1366" height="741" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1780303" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18106061" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -208,7 +210,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.28807947" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.28807947" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Usages" order="9" />
       <window_info anchor="bottom" id="Version Control" order="10" />
@@ -306,8 +308,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Atleta/Atleta.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="340" column="10" selection-start-line="340" selection-start-column="10" selection-end-line="340" selection-end-column="10" />
+        <state relative-caret-position="2775">
+          <caret line="470" column="10" selection-start-line="470" selection-start-column="10" selection-end-line="470" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -330,8 +332,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/actions/atleta/dadosAtletaAction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+        <state relative-caret-position="345">
+          <caret line="23" column="9" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/competicao/Competicoes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1770">
+          <caret line="163" column="62" selection-start-line="163" selection-start-column="62" selection-end-line="163" selection-end-column="62" />
         </state>
       </provider>
     </entry>

@@ -8,6 +8,8 @@ import UserProfile from "../views/UserProfile/UserProfile.jsx";
 import TableList from "../views/TableList/TableList.jsx";
 import Equipes from "../components/equipe/Equipes";
 import EquipeFormulario from "../components/equipe/EquipeFormulario";
+import Competicoes from "../components/competicao/Competicoes";
+import CompeticaoFormulario from "../components/competicao/CompeticaoFormulario";
 
 export class AppRoutes extends React.Component {
   constructor(props) {
@@ -25,6 +27,8 @@ export class AppRoutes extends React.Component {
 
         <AuthenticatedRoute path="/equipes" component={Equipes} />
         <AuthenticatedRoute path="/equipe" component={EquipeFormulario} />
+        <AuthenticatedRoute path="/competicoes" component={Competicoes} />
+        <AuthenticatedRoute path="/competicao" component={CompeticaoFormulario} />
       </Switch>
     );
   }

@@ -19,6 +19,7 @@ import Equipes from "../components/equipe/Equipes";
 import EquipeFormulario from "../components/equipe/EquipeFormulario";
 import Login from "../components/Auth/Login";
 import Atleta from "../components/Atleta/Atleta";
+import Competicoes from "../components/competicao/Competicoes";
 
 const dashboardRoutes = [
   {
@@ -44,6 +45,15 @@ const dashboardRoutes = [
     isAutenticate: true,
     icon: Assignment,
     component: Equipes
+  },
+  {
+    path: "/competicoes",
+    sidebarName: "Competições",
+    navbarName: "Competiçoes",
+    isAutenticate: true,
+    roles: ["ROLE_CLIENTE", "ROLE_ADMIN"],
+    icon: Assignment,
+    component: Competicoes
   },
   {
     path: "/user",
